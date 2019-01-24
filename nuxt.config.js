@@ -8,11 +8,11 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: pkg.name,
+    title: 'Havaz.vn',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: pkg.description }
+      { hid: 'description', name: 'description', content: 'Havaz.vn' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
@@ -47,7 +47,7 @@ module.exports = {
   ],
 
   axios: {
-    baseURL: 'http://localhost:9000',
+    baseURL: 'https://api.havaz.vn/',
   },
 
   /*

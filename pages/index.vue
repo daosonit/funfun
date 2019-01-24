@@ -1,22 +1,73 @@
 <template>
-<el-carousel :interval="10000" type="card" height="calc(100vh - 27px)" style="background: #EBAF00" @change="fetchData">
-    <el-carousel-item v-for="(item, key, index) in dataCarousel" :key="index">
+<el-row :grunt="15" class="body">
+    <el-col :span="24" class="first_content">
         <el-row :grunt="15">
-            <el-col :span="24">
-                <h1 class="txt_title">{{ item.text }}</h1>
+            <el-col :span="24" class="txt_center">
+                <span class="txt_title font_25">Tổng số Booking</span>
+            </el-col>
+            <el-col :span="24" class="txt_center">
+                <span class="txt_title font_150 font-weight">{{this.dataCarousel.bookingAll.values.toLocaleString()}}</span>
             </el-col>
             <el-col :span="24">
-                <div class="container">
-                    <span v-if="item.values < 100" class="txt_value font_300">{{ item.values.toLocaleString() }}</span>
-                    <span v-if="item.values >= 100 && item.values < 1000" class="txt_value font_250">{{ item.values.toLocaleString() }}</span>
-                    <span v-if="item.values >= 1000 && item.values < 10000" class="txt_value font_200">{{ item.values.toLocaleString() }}</span>
-                    <span v-if="item.values >= 10000 && item.values < 100000" class="txt_value font_150">{{ item.values.toLocaleString() }}</span>
-                    <span v-if="item.values >= 100000" class="txt_value font_100">{{ item.values.toLocaleString() }}</span>
-                </div>
+                <table style="width: 100%">
+                    <tr style="padding: 20px 0">
+                        <td align="center" class="header_table"> <span class="font_25">Mới</span> </td>
+                        <td align="center" class="header_table"> <span class="font_25">Thành công</span> </td>
+                        <td align="center" class="header_table"> <span class="font_25">Đang xử lý</span> </td>
+                        <td align="center" class="header_table"> <span class="font_25">Đã thanh toán</span> </td>
+                        <td align="center" class="header_table"> <span class="font_25">Hủy</span> </td>
+                    </tr>
+                    <tr>
+                        <td align="center" class="border_right_black"> 
+                            <span class="font-weight txt_title font_75 color_black">
+                                {{this.dataCarousel.bookingNew.values.toLocaleString()}}</span> </td>
+                        <td align="center" class="border_right_black"> 
+                            <span class="font-weight txt_title font_75 color_black">
+                                {{this.dataCarousel.bookingSuccess.values.toLocaleString()}}</span> </td>
+                        <td align="center" class="border_right_black">
+                            <span class="font-weight txt_title font_75 color_black">
+                                {{this.dataCarousel.bookingPending.values.toLocaleString()}}</span></td>
+                        <td align="center" class="border_right_black">
+                            <span class="font-weight txt_title font_75 color_black">
+                                {{this.dataCarousel.bookingPait.values.toLocaleString()}}</span></td>
+                        <td align="center">
+                            <span class="font-weight txt_title font_75 color_black">
+                                {{this.dataCarousel.bookingCancel.values.toLocaleString()}}</span></td>
+                    </tr>
+                </table>
             </el-col>
         </el-row>
-    </el-carousel-item>
-</el-carousel>
+    </el-col>
+
+    <el-col :span="24" class="second_content">
+        <table style="width: 100%">
+            <tr>
+                <td align="center" class="header_table"> <span class="font_25 color_fff">Xe hợp đồng</span> </td>
+                <td align="center" class="header_table"> <span class="font_25 color_fff">Đối tác</span> </td>
+                <td align="center" class="header_table"> <span class="font_25 color_fff">Phương tiện</span> </td>
+                <td align="center" class="header_table"> <span class="font_25 color_fff">Cài App</span> </td>
+                <td align="center" class="header_table"> <span class="font_25 color_fff">Xóa App</span> </td>
+            </tr>
+            <tr>
+                <td align="center" class="border_right_white"> 
+                    <span class="font-weight txt_title font_75 color_fff">
+                        {{this.dataCarousel.carrental.values.toLocaleString()}}</span> </td>
+                <td align="center" class="border_right_white"> 
+                    <span class="font-weight txt_title font_75 color_fff">
+                        {{this.dataCarousel.merchants.values.toLocaleString()}}</span> </td>
+                <td align="center" class="border_right_white">
+                    <span class="font-weight txt_title font_75 color_fff">
+                        {{this.dataCarousel.vehicle.values.toLocaleString()}}</span></td>
+                <td align="center" class="border_right_white">
+                    <span class="font-weight txt_title font_75 color_fff">
+                        {{this.dataCarousel.openApp.values.toLocaleString()}}</span></td>
+                <td align="center">
+                    <span class="font-weight txt_title font_75 color_fff">
+                        {{this.dataCarousel.removeApp.values.toLocaleString()}}</span></td>
+            </tr>
+        </table>
+    </el-col>
+</el-row>
 </template>
 
 <script>
@@ -57,10 +108,10 @@ export default {
                     text: 'SỐ NHÀ XE',
                     values: 0
                 },
-                // vehicle: {
-                //     text: 'SỐ PHƯƠNG TIỆN',
-                //     values: 0
-                // },
+                vehicle: {
+                    text: 'SỐ PHƯƠNG TIỆN',
+                    values: 0
+                },
                 carrental: {
                     text: 'SỐ BOOKING CARRENTAL',
                     values: 0
@@ -77,8 +128,16 @@ export default {
         }
     },
 
+    mounted() {
+        this.fetchData()
+
+        setInterval(() => {
+            this.fetchData()
+        }, 10000);
+    },
+
     methods: {
-        fetchData(e) {
+        fetchData() {
             this.$axios.$get('screen').then((res) => {
                 this.dataCarousel.carrental.values = res.carrental
                 this.dataCarousel.bookingAll.values = res.bookingAll
@@ -90,7 +149,7 @@ export default {
                 this.dataCarousel.merchants.values = res.merchants
                 this.dataCarousel.openApp.values = res.openApp
                 this.dataCarousel.removeApp.values = res.removeApp
-                //this.dataCarousel.vehicle.values = res.vehicle
+                this.dataCarousel.vehicle.values = res.vehicle
             }).catch((err) => {
                 console.log(err)
             })
@@ -100,16 +159,33 @@ export default {
 </script>
 
 <style>
+.font-weight {
+    font-weight: bold;
+}
+
+.body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.first_content {
+    background: #EBAF00;
+    padding: 50px;
+    height: calc(100vh - 300px);
+}
+
+.second_content {
+    background: #0C0D12;
+    padding: 80px;
+    height: 300px;
+}
+
 .container {
     padding: 25px;
     text-align: center
 }
 
 .txt_title {
-    color: #fff;
-    font-size: 40px;
     text-align: center;
-    text-transform: uppercase;
     margin: 50px 0;
 }
 
@@ -127,24 +203,24 @@ export default {
     margin: 0;
 }
 
-.font_300 {
-    font-size: 300px;
+.font_25 {
+    font-size: 25px;
 }
 
 .font_250 {
     font-size: 250px;
 }
 
-.font_200 {
-    font-size: 200px;
+.header_table {
+    padding-bottom: 20px;
 }
 
 .font_150 {
     font-size: 150px;
 }
 
-.font_100 {
-    font-size: 125px;
+.font_75 {
+    font-size: 75px;
 }
 
 .el-carousel__item:nth-child(2n) {
@@ -155,5 +231,25 @@ export default {
 .el-carousel__item:nth-child(2n+1) {
     border-radius: 5px;
     background: #0C0D12;
+}
+
+.txt_center {
+    text-align: center
+}
+
+.color_fff {
+    color: #ffffff;
+}
+
+.color_black {
+    color: #0C0D12;
+}
+
+.border_right_black {
+    border-right: 2px solid #0C0D12;
+}
+
+.border_right_white {
+    border-right: 2px solid #ffffff;
 }
 </style>

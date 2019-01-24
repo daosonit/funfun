@@ -1,5 +1,5 @@
 <template>
-<el-carousel :interval="5000" type="card" height="calc(100vh - 27px)" style="background: #EBAF00" @change="fetchData">
+<el-carousel :interval="10000" type="card" height="calc(100vh - 27px)" style="background: #EBAF00" @change="fetchData">
     <el-carousel-item v-for="(item, key, index) in dataCarousel" :key="index">
         <el-row :grunt="15">
             <el-col :span="24">
@@ -24,44 +24,6 @@ import axios from 'axios'
 export default {
     data() {
         return {
-            carouselData: [{
-                    text: 'Số lượng cài đặt App IOS',
-                    values: 999
-                },
-                {
-                    text: 'Số lượng cài đặt App Android',
-                    values: 99
-                },
-                {
-                    text: 'Số lượng đơn hàng sàn',
-                    values: 9999
-                },
-                {
-                    text: 'Số đơn hàng carrental',
-                    values: 80
-                },
-                {
-                    text: 'Số đơn hàng thành công',
-                    values: 99999
-                },
-                {
-                    text: 'Số đơn hàng hủy',
-                    values: 999999
-                },
-                {
-                    text: 'Tổng số nhà xe',
-                    values: 80
-                },
-                {
-                    text: 'Tổng số xe',
-                    values: 80
-                },
-                {
-                    text: 'Số lượt gỡ App',
-                    values: 80
-                }
-            ],
-
             dataCarousel: {
                 carrental: {
                     text: 'SỐ BOOKING CARRENTAL',
@@ -95,10 +57,10 @@ export default {
                     text: 'SỐ NHÀ XE',
                     values: 0
                 },
-                vehicle: {
-                    text: 'SỐ PHƯƠNG TIỆN',
-                    values: 0
-                },
+                // vehicle: {
+                //     text: 'SỐ PHƯƠNG TIỆN',
+                //     values: 0
+                // },
                 carrental: {
                     text: 'SỐ BOOKING CARRENTAL',
                     values: 0
@@ -128,7 +90,7 @@ export default {
                 this.dataCarousel.merchants.values = res.merchants
                 this.dataCarousel.openApp.values = res.openApp
                 this.dataCarousel.removeApp.values = res.removeApp
-                this.dataCarousel.vehicle.values = res.vehicle
+                //this.dataCarousel.vehicle.values = res.vehicle
             }).catch((err) => {
                 console.log(err)
             })

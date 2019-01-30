@@ -118,11 +118,11 @@ export default {
                 },
                 openApp: {
                     text: 'SỐ USER CÀI APP',
-                    values: 0
+                    values: 3067
                 },
                 removeApp: {
                     text: 'SỐ GỠ BỎ APP',
-                    values: 0
+                    values: 781
                 }
             }
         }
@@ -147,8 +147,8 @@ export default {
                 this.dataCarousel.bookingPending.values = res.bookingPending
                 this.dataCarousel.bookingSuccess.values = res.bookingSuccess
                 this.dataCarousel.merchants.values = res.merchants
-                this.dataCarousel.openApp.values = res.openApp
-                this.dataCarousel.removeApp.values = res.removeApp
+                //this.dataCarousel.openApp.values = res.openApp
+                //this.dataCarousel.removeApp.values = res.removeApp
                 this.dataCarousel.vehicle.values = res.vehicle
             }).catch((err) => {
                 console.log(err)
